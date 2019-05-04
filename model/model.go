@@ -17,15 +17,20 @@ package model
 import (
 	"strconv"
 	"strings"
+	"sync"
 
-	"github.com/casbin/casbin/config"
-	"github.com/casbin/casbin/log"
-	"github.com/casbin/casbin/util"
+	"github.com/shiyongabc/casbin/config"
+	"github.com/shiyongabc/casbin/log"
+	"github.com/shiyongabc/casbin/util"
 )
 
 // Model represents the whole access control model.
+// type Model sync.Map{map[string]AssertionMap}
 type Model map[string]AssertionMap
-
+type counter = struct{
+	sync.RWMutex
+	 model map[string]AssertionMap
+}
 // AssertionMap is the collection of assertions, can be "r", "p", "g", "e", "m".
 type AssertionMap map[string]*Assertion
 
@@ -39,6 +44,8 @@ var sectionNameMap = map[string]string{
 
 func loadAssertion(model Model, cfg config.ConfigInterface, sec string, key string) bool {
 	value := cfg.String(sectionNameMap[sec] + "::" + key)
+	counter.RLock()
+
 	return model.AddDef(sec, key, value)
 }
 

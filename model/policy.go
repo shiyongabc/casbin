@@ -15,9 +15,9 @@
 package model
 
 import (
-	"github.com/casbin/casbin/log"
-	"github.com/casbin/casbin/rbac"
-	"github.com/casbin/casbin/util"
+	"github.com/shiyongabc/casbin/log"
+	"github.com/shiyongabc/casbin/rbac"
+	"github.com/shiyongabc/casbin/util"
 )
 
 // BuildRoleLinks initializes the roles in RBAC.
