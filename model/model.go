@@ -44,8 +44,6 @@ var sectionNameMap = map[string]string{
 
 func loadAssertion(model Model, cfg config.ConfigInterface, sec string, key string) bool {
 	value := cfg.String(sectionNameMap[sec] + "::" + key)
-	counter.RLock()
-
 	return model.AddDef(sec, key, value)
 }
 
